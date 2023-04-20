@@ -1,4 +1,8 @@
-﻿using static System.Console;
+﻿using System.Security.Cryptography;
+using static System.Console;
+
+Employye Joe = new Employye("Joe", "KFC");
+Joe.Print();
 
 Research_Associate Ted = new Research_Associate("Ted", "LG", 4);
 Ted.Print();
@@ -16,7 +20,16 @@ class Person
     public string Name
     {
         get { return _name; }
-        set { _name = value; }
+        set {  
+                try
+                {
+                    _name = value;
+                }
+                catch (Exception ex)
+                {
+                    WriteLine($"Ошибка: {ex.Message}");
+                }
+            }
     }
     public virtual void Print()
     {
@@ -30,7 +43,7 @@ class Employye:Person//указываем, что он потомок класс
     {
         Company = company;
     }
-    public override void Print()
+    public sealed override void Print()
     {
         base.Print();
         WriteLine(Company);
@@ -79,7 +92,7 @@ class Research_Associate: Employye
     {
         Work_experience = work_ex;
     }
-    public override void Print()
+    public new void Print()
     {
         base.Print();
         WriteLine(Work_experience);
